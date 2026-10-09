@@ -1,71 +1,68 @@
 # QuickDecompile
 
-QuickDecompile is a lightweight, fast, and simple desktop application designed to view decompiled code instantly. It acts like a "Notepad for decompilation" — no complex project setups, no settings menus, just right-click a compiled file and see the code.
+Лёгкий и быстрый десктопный просмотрщик декомпилированного кода.
+Работает как «Блокнот для декомпиляции» — никаких настроек проектов, никаких меню, просто правый клик на скомпилированный файл и сразу виден исходник.
 
-## Supported Formats
-- **.NET**: `.dll`, `.exe` (decompiled using ICSharpCode.Decompiler)
-- **Java**: `.class`, `.jar`, `.war` (decompiled using Vineflower)
-- **Android**: `.dex`, `.apk`, `.aab` (decompiled using jadx)
+## Поддерживаемые форматы
+- **.NET**: `.dll`, `.exe` (декомпиляция через ICSharpCode.Decompiler)
+- **Java**: `.class`, `.jar`, `.war` (декомпиляция через Vineflower)
+- **Android**: `.dex`, `.apk`, `.aab` (декомпиляция через jadx)
 
-## Architecture
-- **Core**: File format detection and caching models.
-- **Backends**: Wrappers for underlying decompilation tools.
-- **Shell**: Integration with the Windows Context Menu and single-instance IPC.
-- **UI**: Avalonia UI application using AvaloniaEdit for syntax highlighting.
+## Архитектура
+- **Core**: определение формата файла и кэш результатов.
+- **Backends**: обёртки над внешними инструментами декомпиляции.
+- **Shell**: интеграция с контекстным меню Windows и IPC для одного экземпляра приложения.
+- **UI**: приложение на Avalonia UI с синтаксической подсветкой через AvaloniaEdit.
 
-## Getting Started
+## Запуск
 
-### Prerequisites
-- .NET 8.0 SDK (for building)
-- Java Runtime Environment (JRE) installed and in your `PATH` or `JAVA_HOME` (required for Java and Android decompilation)
+### Требования
+- .NET 8.0 SDK (для сборки)
+- Java Runtime Environment (JRE) в `PATH` или `JAVA_HOME` (нужен для Java и Android декомпиляции)
 
-### External Decompilers
-QuickDecompile relies on external tools to decompile Java and Android applications. You must download these JAR files and place them in the same folder as the `QuickDecompile.UI.exe` binary.
+### Внешние декомпиляторы
+Для декомпиляции Java и Android нужно скачать JAR-файлы и положить их рядом с `QuickDecompile.UI.exe`.
 
-1. **Vineflower** (for Java `.class` and `.jar`):
-   - Download the latest `vineflower-X.Y.Z.jar` from the [Vineflower Releases](https://github.com/Vineflower/vineflower/releases) page.
-   - Rename it to `vineflower.jar` and place it next to the executable.
+1. **Vineflower** (для `.class` и `.jar`):
+   - Скачать последний `vineflower-X.Y.Z.jar` с [Vineflower Releases](https://github.com/Vineflower/vineflower/releases).
+   - Переименовать в `vineflower.jar` и положить рядом с exe.
 
-2. **jadx** (for Android `.apk` and `.dex`):
-   - Download the latest `jadx-X.Y.Z.zip` from the [jadx Releases](https://github.com/skylot/jadx/releases) page.
-   - Extract `jadx-cli.jar` and place it next to the executable as `jadx.jar`.
+2. **jadx** (для `.apk` и `.dex`):
+   - Скачать последний `jadx-X.Y.Z.zip` с [jadx Releases](https://github.com/skylot/jadx/releases).
+   - Извлечь `jadx-cli.jar` и положить рядом с exe как `jadx.jar`.
 
-*(Alternatively, QuickDecompile will attempt to search for any `*vineflower*.jar`, `*cfr*.jar`, or `*jadx*.jar` in the application's root directory).*
+*(QuickDecompile также автоматически ищет `*vineflower*.jar`, `*cfr*.jar` или `*jadx*.jar` в папке с exe).*
 
-### Build and Run
+### Сборка и запуск
 ```bash
 dotnet build QuickDecompile.sln
 dotnet run --project src/QuickDecompile.UI
 ```
 
-To test passing a file directly:
+Запуск с файлом напрямую:
 ```bash
-dotnet run --project src/QuickDecompile.UI -- "path/to/some/file.dll"
+dotnet run --project src/QuickDecompile.UI -- "путь/к/файлу.dll"
 ```
 
-## Features
-- **Context Menu Integration**: Add "Open with QuickDecompile" directly to your Windows context menu from the application settings.
-- **Instant Viewing**: Fast launch times and in-memory caching.
-- **Tabbed Interface**: Open multiple files seamlessly.
-- **Tree Viewer**: Browse container structures (JARs, APKs, DLLs) efficiently.
+## Возможности
+- **Интеграция с контекстным меню**: добавляет «Открыть в QuickDecompile» прямо в контекстное меню Windows.
+- **Мгновенный просмотр**: быстрый запуск и кэш результатов в памяти.
+- **Вкладки**: несколько файлов одновременно.
+- **Дерево файлов**: навигация по содержимому JAR, APK, DLL.
 
-## Third-Party Licenses
+## Лицензии сторонних компонентов
 
-This project integrates or depends on the following excellent open-source projects:
+- **[Avalonia UI](https://github.com/AvaloniaUI/Avalonia)**: MIT License.
+- **[AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit)**: MIT License.
+- **[ICSharpCode.Decompiler](https://github.com/icsharpcode/ILSpy)**: MIT License.
+- **[Vineflower](https://github.com/Vineflower/vineflower)**: GPL-2.0 License.
+- **[CFR](https://github.com/leibnitz27/cfr)**: MIT License.
+- **[jadx](https://github.com/skylot/jadx)**: Apache-2.0 License.
 
-- **[Avalonia UI](https://github.com/AvaloniaUI/Avalonia)**: Licensed under the MIT License.
-- **[AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit)**: Licensed under the MIT License.
-- **[ICSharpCode.Decompiler](https://github.com/icsharpcode/ILSpy)**: Licensed under the MIT License.
-- **[Vineflower](https://github.com/Vineflower/vineflower)**: Licensed under the GPL-2.0 License.
-- **[CFR](https://github.com/leibnitz27/cfr)**: Licensed under the MIT License.
-- **[jadx](https://github.com/skylot/jadx)**: Licensed under the Apache-2.0 License.
+## MVP
 
-Please ensure you comply with the respective licenses when using or distributing this software.
-
-## MVP Scope
-
-Currently, this tool is strictly a viewer. Out of scope for this initial MVP:
-- Recompilation and editing
-- Deobfuscation and patching
-- Dynamic analysis / debugging
-- Heavy plugins
+Текущая версия является исключительно просмотрщиком. Вне скоупа MVP:
+- Редактирование и перекомпиляция
+- Деобфускация и патчинг
+- Динамический анализ и отладка
+- Плагины
