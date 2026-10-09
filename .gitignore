@@ -1,0 +1,19 @@
+# .gitignore for .NET / Avalonia projects
+bin/
+obj/
+*.user
+.vs/
+*.suo
+*.DS_Store
+
+# Test files in root
+Test.class
+Test.java
+test.cs
+tmp_out/
+
+# Publish output (binaries)
+publish/
+
+# PDB symbols
+*.pdb

@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:QuickDecompile.UI.ViewModels"
+             xmlns:views="using:QuickDecompile.UI.Views"
+             xmlns:ae="using:AvaloniaEdit"
+             x:Class="QuickDecompile.UI.Views.TabContentView"
+             x:DataType="vm:TabViewModel">
+
+  <Grid>
+
+    
+    <ProgressBar IsIndeterminate="True"
+                 IsVisible="{Binding IsLoading}"
+                 VerticalAlignment="Top"
+                 Height="3"
+                 Margin="0"/>
+
+    
+    <Grid IsVisible="{Binding HasEntryTree}"
+          ColumnDefinitions="240,4,*">
+
+      
+      <Border Grid.Column="0" Classes="treePanel">
+        <TreeView ItemsSource="{Binding EntryTree}"
+                  x:Name="EntryTreeView">
+          <TreeView.ItemTemplate>
+            <TreeDataTemplate x:DataType="vm:EntryNodeViewModel"
+                              ItemsSource="{Binding Children}">
+              <StackPanel Orientation="Horizontal" Spacing="4">
+                <TextBlock Text="{Binding Icon}" FontSize="12"/>
+                <TextBlock Text="{Binding DisplayName}"
+                           ToolTip.Tip="{Binding EntryPath}"/>
+              </StackPanel>
+            </TreeDataTemplate>
+          </TreeView.ItemTemplate>
+        </TreeView>
+      </Border>
+
+      
+      <GridSplitter Grid.Column="1" Background="Transparent" ResizeBehavior="PreviousAndNext"/>
+
+      
+      <ae:TextEditor Grid.Column="2"
+                     x:Name="CodeEditor"
+                     views:TextEditorAttachedProperties.SyncText="{Binding SourceCode}"
+                     IsReadOnly="True"
+                     ShowLineNumbers="True"
+                     FontFamily="Cascadia Code,Consolas,Courier New,monospace"
+                     FontSize="13"
+                     WordWrap="False"
+                     HorizontalScrollBarVisibility="Auto"
+                     VerticalScrollBarVisibility="Auto"/>
+
+    </Grid>
+
+    
+    <Grid IsVisible="{Binding !HasEntryTree}">
+      <ae:TextEditor x:Name="CodeEditorSingle"
+                     views:TextEditorAttachedProperties.SyncText="{Binding SourceCode}"
+                     IsReadOnly="True"
+                     ShowLineNumbers="True"
+                     FontFamily="Cascadia Code,Consolas,Courier New,monospace"
+                     FontSize="13"
+                     WordWrap="False"
+                     HorizontalScrollBarVisibility="Auto"
+                     VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+
+  </Grid>
+</UserControl>
